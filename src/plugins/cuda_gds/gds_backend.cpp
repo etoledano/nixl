@@ -19,6 +19,7 @@
 #include <cufile.h>
 #include "gds_backend.h"
 #include "common/str_tools.h"
+#include <absl/log/log.h>
 
 #define  GDS_BATCH_LIMIT 128
 
@@ -33,7 +34,7 @@ nixlGdsIOBatch::nixlGdsIOBatch(unsigned int size)
 
     init_err = cuFileBatchIOSetUp(&batch_handle, size);
     if (init_err.err != 0) {
-        std::cerr << "Error in creating the batch\n";
+        LOG(ERROR) << "Error in creating the batch";
     }
 }
 
@@ -45,7 +46,7 @@ nixlGdsIOBatch::~nixlGdsIOBatch()
             delete io_batch_params;
         cuFileBatchIODestroy(batch_handle);
     } else {
-            std::cerr<<"Attempting to delete a batch before completion\n";
+        LOG(ERROR) << "Attempting to delete a batch before completion";
     }
 }
 
@@ -85,7 +86,7 @@ nixl_status_t nixlGdsIOBatch::cancelBatch()
 
     err = cuFileBatchIOCancel(batch_handle);
     if (err.err != 0) {
-        std::cerr << "Error in canceling batch\n";
+        LOG(ERROR) << "Error in canceling batch";
         return NIXL_ERR_BACKEND;
     }
     return NIXL_SUCCESS;
@@ -98,7 +99,7 @@ nixl_status_t nixlGdsIOBatch::submitBatch(int flags)
     err = cuFileBatchIOSubmit(batch_handle, batch_size,
                               io_batch_params, flags);
     if (err.err != 0) {
-        std::cerr << "Error in setting up Batch\n" << std::endl;
+        LOG(ERROR) << "Error in setting up Batch";
         return NIXL_ERR_BACKEND;
     }
     return NIXL_SUCCESS;
@@ -112,7 +113,7 @@ nixl_status_t nixlGdsIOBatch::checkStatus()
     errBatch = cuFileBatchIOGetStatus(batch_handle, 0, &nr,
                                       io_batch_events, NULL);
     if (errBatch.err != 0) {
-        std::cerr << "Error in IO Batch Get Status" << std::endl;
+        LOG(ERROR) << "Error in IO Batch Get Status";
         current_status = NIXL_ERR_BACKEND;
     }
 
@@ -234,17 +235,17 @@ nixl_status_t nixlGdsEngine::postXfer (const nixl_xfer_op_t &operation,
 
     if ((buf_cnt != file_cnt) ||
             ((operation != NIXL_READ) && (operation != NIXL_WRITE)))  {
-        std::cerr <<"Error in count or operation selection\n";
+        LOG(ERROR) <<"Error in count or operation selection";
         return NIXL_ERR_INVALID_PARAM;
     }
 
     if ((remote.getType() != FILE_SEG) && (local.getType() != FILE_SEG)) {
-        std::cerr <<"Only support I/O between VRAM to file type\n";
+        LOG(ERROR) <<"Only support I/O between VRAM to file type";
         return NIXL_ERR_INVALID_PARAM;
     }
 
     if ((remote.getType() == DRAM_SEG) || (local.getType() == DRAM_SEG)) {
-        std::cerr <<"Backend does not support DRAM to/from files\n";
+        LOG(ERROR) <<"Backend does not support DRAM to/from files";
         return NIXL_ERR_INVALID_PARAM;
     }
 
