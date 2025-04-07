@@ -29,6 +29,7 @@ absl_cmake_opts.add_cmake_defines({
   # on some systems so we need to manually turn them off.
   'MINGW': 'OFF',
   'ANDROID': 'OFF',
+  'LIBRT': 'OFF',
   })
 
 absl_proj = cmake.subproject('abseil-cpp', options: absl_cmake_opts)
