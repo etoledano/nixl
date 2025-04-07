@@ -22,6 +22,8 @@
 #include "nixl_descriptors.h"
 #include "backend/backend_engine.h"
 #include "serdes/serdes.h"
+#include <absl/log/log.h>
+#include <absl/strings/str_format.h>
 
 /*** Class nixlBasicDesc implementation ***/
 
@@ -88,8 +90,8 @@ nixl_blob_t nixlBasicDesc::serialize() const {
 }
 
 void nixlBasicDesc::print(const std::string &suffix) const {
-    std::cout << "LOG: Desc (" << addr << ", " << len
-              << ") from devID " << devId << suffix << "\n";
+    LOG(INFO) << absl::StrFormat("Desc(%p,%u) from devID %u%s", addr, len, devId,
+                                 suffix);
 }
 
 
@@ -506,10 +508,10 @@ nixl_status_t nixlDescList<T>::serialize(nixlSerDes* serializer) const {
 
 template <class T>
 void nixlDescList<T>::print() const {
-    std::cout << "LOG: DescList of mem type " << type
-              << (sorted ? "sorted" : "unsorted") << "\n";
-    for (auto & elm : descs) {
-        std::cout << "    ";
+    LOG(INFO) << absl::StrFormat("DescList of mem type %d %s", type,
+                                 (sorted ? "sorted" : "unsorted"));
+    for (auto &elm : descs) {
+        LOG(INFO) << "";
         elm.print("");
     }
 }
