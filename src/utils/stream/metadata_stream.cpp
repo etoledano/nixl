@@ -21,6 +21,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <absl/log/log.h>
+#include <absl/strings/str_format.h>
 
 nixlMetadataStream::nixlMetadataStream(int port): port(port), socketFd(-1) {
     memset(&listenerAddr, 0, sizeof(listenerAddr));
@@ -34,7 +36,7 @@ bool nixlMetadataStream::setupStream() {
 
     socketFd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketFd == -1) {
-        std::cerr << "failed to create stream socket for listener";
+        LOG(ERROR) << "failed to create stream socket for listener";
         return false;
     }
 
@@ -69,26 +71,25 @@ void nixlMDStreamListener::setupListener() {
 
     if (bind(socketFd, (struct sockaddr*)&listenerAddr,
              sizeof(listenerAddr)) < 0) {
-        std::cerr << "Socket Bind failed while setting up listener for MD\n";
+        LOG(ERROR) << "Socket Bind failed while setting up listener for MD";
         closeStream();
         return;
     }
 
     if (listen(socketFd, 128) < 0) {
-        std::cerr << "Listening failed for stream Socket: "
-                  << socketFd  << "\n";
+        LOG(ERROR) << absl::StrFormat("Listening failed for stream Socket: ",
+                                      socketFd);
         closeStream();
         return;
     }
-    std::cout << "MD listener is listening on port "
-              << port << "...\n";
+    LOG(INFO) << absl::StrFormat("MD listener is listening on port %d", port);
 }
 
 void nixlMDStreamListener::acceptClient() {
         csock = accept(socketFd, NULL, NULL);
         if (csock < 0) {
-            std::cerr << "Cannot accept client connection\n"
-                      << strerror(errno) << std::endl;
+            LOG(ERROR) << absl::StrFormat("Cannot accept client connection %d",
+                                          strerror(errno));
             return;
         }
 }
@@ -98,11 +99,11 @@ void nixlMDStreamListener::acceptClientsAsync() {
     while(true) {
         int clientSocket = accept(socketFd, NULL, NULL);
         if (clientSocket < 0) {
-            std::cerr << "Cannot accept client connection\n"
-                      << strerror(errno) << std::endl;
+            LOG(ERROR) << absl::StrFormat("Cannot accept client connection %d",
+                                          strerror(errno));
             continue;
         }
-        std::cout << "Client connected.\n";
+        LOG(INFO) << "Client connected.";
         std::thread clientThread(&nixlMDStreamListener::recvFromClients,
                                  this, clientSocket);
         clientThread.detach();
@@ -119,9 +120,9 @@ std::string nixlMDStreamListener::recvFromClient() {
         if (bytes_read > 0) {
                 recvData = std::string(buffer, bytes_read);
         } else if (bytes_read == 0) {
-                std::cout << "Client Disconnectd" <<std::endl;
+                LOG(INFO) << "Client Disconnectd";
         } else {
-                std::cerr << "Error receiving data" << std::endl;
+                LOG(ERROR) << "Error receiving data";
         }
         return recvData;
 }
@@ -137,10 +138,10 @@ void nixlMDStreamListener::recvFromClients(int clientSocket) {
               std::string ack = "Message received";
               send(clientSocket, ack.c_str(), ack.size(), 0);
               std::string recv_message(buffer);
-              std::cout << "Message Received" << recv_message <<"\n";
+              LOG(INFO) << absl::StrFormat("Message Received", recv_message);
         }
         close(clientSocket);
-        std::cout << "Client Disconnected\n";
+        LOG(INFO) << "Client Disconnected";
 }
 
 void nixlMDStreamListener::startListenerForClient() {
@@ -178,12 +179,12 @@ bool nixlMDStreamClient::setupClient() {
 
     if (connect(socketFd, (struct sockaddr*)&listenerAddr,
                 sizeof(listenerAddr)) < 0) {
-        std::cerr << "Connection Failed: "<< strerror(errno) << std::endl;
+        LOG(ERROR) << absl::StrFormat("Connection Failed: %d", strerror(errno));
         closeStream();
         return false;
     }
-    std::cout << "Connected to listener at "
-              << listenerAddress << ":" << port << "\n";
+    LOG(INFO) << absl::StrFormat("Connected to listener at %s:%d",
+                                 listenerAddress, port);
     return true;
 }
 
@@ -194,7 +195,7 @@ bool nixlMDStreamClient::connectListener() {
 
 void nixlMDStreamClient::sendData(const std::string &data) {
     if (send(socketFd, data.c_str(), data.size(), 0) < 0) {
-        std::cerr << "Send failed\n";
+        LOG(ERROR) << "Send failed";
     }
 }
 
