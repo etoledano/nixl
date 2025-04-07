@@ -27,6 +27,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <absl/log/log.h>
+#include <absl/strings/str_format.h>
 
 // pluginHandle implementation
 nixlPluginHandle::nixlPluginHandle(void* handle, nixlBackendPlugin* plugin)
@@ -81,7 +83,8 @@ std::map<nixl_backend_t, std::string> loadPluginList(const std::string& filename
     std::ifstream file(filename);
 
     if (!file.is_open()) {
-        std::cerr << "Failed to open plugin list file: " << filename << std::endl;
+        LOG(ERROR) << absl::StrFormat("Failed to open plugin list file: %s",
+                                      filename);
         return plugins;
     }
 
@@ -117,8 +120,8 @@ std::shared_ptr<nixlPluginHandle> nixlPluginManager::loadPluginFromPath(const st
     // Open the plugin file
     void* handle = dlopen(plugin_path.c_str(), RTLD_NOW | RTLD_LOCAL);
     if (!handle) {
-        std::cerr << "Failed to load plugin from " << plugin_path <<
-                     ": " << dlerror() << std::endl;
+        LOG(ERROR) << absl::StrFormat("Failed to load plugin from %s error %s",
+                                      plugin_path, dlerror());
         return nullptr;
     }
 
@@ -126,8 +129,9 @@ std::shared_ptr<nixlPluginHandle> nixlPluginManager::loadPluginFromPath(const st
     typedef nixlBackendPlugin* (*init_func_t)();
     init_func_t init = (init_func_t) dlsym(handle, "nixl_plugin_init");
     if (!init) {
-        std::cerr << "Failed to find nixl_plugin_init in " << plugin_path
-                    << ": " << dlerror() << std::endl;
+        LOG(ERROR) << absl ::StrFormat(
+            "Failed to find nixl_plugin_init in %s error %s", plugin_path,
+            dlerror());
         dlclose(handle);
         return nullptr;
     }
@@ -135,16 +139,17 @@ std::shared_ptr<nixlPluginHandle> nixlPluginManager::loadPluginFromPath(const st
     // Call the initialization function
     nixlBackendPlugin* plugin = init();
     if (!plugin) {
-        std::cerr << "Plugin initialization failed for " << plugin_path << std::endl;
+        LOG(ERROR) << absl::StrFormat("Plugin initialization failed for %s",
+                                      plugin_path);
         dlclose(handle);
         return nullptr;
     }
 
     // Check API version
     if (plugin->api_version != NIXL_PLUGIN_API_VERSION) {
-        std::cerr << "Plugin API version mismatch for " << plugin_path
-                    << ": expected " << NIXL_PLUGIN_API_VERSION
-                    << ", got " << plugin->api_version << std::endl;
+        LOG(ERROR) << absl::StrFormat(
+            "Plugin API version mismatch for %s expected %d got %d", plugin_path,
+            NIXL_PLUGIN_API_VERSION, plugin->api_version);
         dlclose(handle);
         return nullptr;
     }
@@ -201,20 +206,22 @@ nixlPluginManager& nixlPluginManager::getInstance() {
 
 void nixlPluginManager::addPluginDirectory(const std::string& directory) {
     if (directory.empty()) {
-        std::cerr << "Cannot add empty plugin directory" << std::endl;
+        LOG(ERROR) << "Cannot add empty plugin directory";
         return;
     }
 
     // Check if directory exists
     if (access(directory.c_str(), F_OK | R_OK) != 0) {
-        std::cerr << "Plugin directory does not exist or is not readable: " << directory << std::endl;
+        LOG(ERROR) << absl::StrFormat(
+            "Plugin directory does not exist or is not readable %s", directory);
         return;
     }
 
     // Check if directory is already in the list
     for (const auto& dir : plugin_dirs_) {
         if (dir == directory) {
-            std::cout << "Plugin directory already registered: " << directory << std::endl;
+            LOG(WARNING) << absl::StrFormat(
+                "Plugin directory already registered %s", directory);
             return;
         }
     }
@@ -246,7 +253,8 @@ std::shared_ptr<nixlPluginHandle> nixlPluginManager::loadPlugin(const std::strin
 
         // Check if the plugin file exists before attempting to load i
         if (access(plugin_path.c_str(), F_OK) != 0) {
-            std::cerr << "Plugin file does not exist: " << plugin_path << std::endl;
+            LOG(ERROR) << absl::StrFormat("Plugin file does not exist %s",
+                                          plugin_path);
             continue;
         }
 
@@ -258,7 +266,8 @@ std::shared_ptr<nixlPluginHandle> nixlPluginManager::loadPlugin(const std::strin
     }
 
     // Failed to load the plugin
-    std::cerr << "Failed to load plugin '" << plugin_name << "' from any directory" << std::endl;
+    LOG(ERROR) << absl ::StrFormat(
+        "Failed to load plugin %s from any directory", plugin_name);
     return nullptr;
 }
 
@@ -283,7 +292,7 @@ void nixlPluginManager::discoverPluginsFromDir(const std::string& dirpath) {
             // Try to load the plugin
             auto plugin = loadPlugin(plugin_name);
             if (plugin) {
-               std::cout << "Loaded plugin " << plugin_name << std::endl;
+                LOG(INFO) << absl::StrFormat("Loaded plugin %s", plugin_name);
             }
         }
     }

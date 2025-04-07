@@ -17,6 +17,7 @@
 #include "ucx_backend.h"
 #include "serdes/serdes.h"
 #include <cassert>
+#include <absl/log/log.h>
 
 #ifdef HAVE_CUDA
 
@@ -312,7 +313,7 @@ nixlUcxEngine::nixlUcxEngine (const nixlBackendInitParams* init_params)
 
     // Temp fixup
     if (getenv("NIXL_DISABLE_CUDA_ADDR_WA")) {
-        std::cout << "WARNING: disabling CUDA address workaround" << std::endl;
+        LOG(WARNING) << "Disabling CUDA address workaround";
         cuda_addr_wa = false;
     } else {
         cuda_addr_wa = true;

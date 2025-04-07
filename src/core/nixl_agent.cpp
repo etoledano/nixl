@@ -22,6 +22,8 @@
 #include "transfer_request.h"
 #include "agent_data.h"
 #include "plugin_manager.h"
+#include <absl/log/log.h>
+#include <absl/strings/str_format.h>
 
 /*** nixlEnumStrings namespace implementation in API ***/
 std::string nixlEnumStrings::memTypeStr(const nixl_mem_t &mem) {
@@ -181,7 +183,7 @@ nixlAgent::createBackend(const nixl_backend_t &type,
         // Plugin found, use it to create the backend
         backend = plugin_handle->createEngine(&init_params);
     } else {
-        std::cout << "Unsupported backend: " << type << std::endl;
+        LOG(ERROR) << absl::StrFormat("Unsupported backend: %s", type);
         return NIXL_ERR_NOT_FOUND;
     }
 
