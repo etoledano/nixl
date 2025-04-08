@@ -16,6 +16,7 @@
  */
 #include <iostream>
 #include "gds_utils.h"
+#include <absl/log/log.h>
 
 nixl_status_t gdsUtil::registerFileHandle(int fd, size_t size,
         std::string metaInfo,
@@ -30,8 +31,7 @@ nixl_status_t gdsUtil::registerFileHandle(int fd, size_t size,
 
     status = cuFileHandleRegister(&handle, &descr);
     if (status.err != CU_FILE_SUCCESS) {
-        std::cerr << "file register error:"
-                  << std::endl;
+        LOG(ERROR) << "file register error:";
         return NIXL_ERR_BACKEND;
     }
 
@@ -49,7 +49,7 @@ nixl_status_t gdsUtil::registerBufHandle(void *ptr, size_t size, int flags)
 
     status = cuFileBufRegister(ptr, size, flags);
     if (status.err != CU_FILE_SUCCESS) {
-        std::cerr << "Buffer registration failed\n";
+        LOG(ERROR) << "Buffer registration failed";
         return NIXL_ERR_BACKEND;
     }
     return NIXL_SUCCESS;
@@ -62,7 +62,7 @@ nixl_status_t gdsUtil::openGdsDriver()
 
     err = cuFileDriverOpen();
     if (err.err != CU_FILE_SUCCESS) {
-        std::cerr <<" Error initializing GPU Direct Storage driver\n";
+        LOG(ERROR) <<" Error initializing GPU Direct Storage driver";
         return NIXL_ERR_BACKEND;
     }
     return NIXL_SUCCESS;
@@ -84,7 +84,7 @@ nixl_status_t gdsUtil::deregisterBufHandle(void *ptr)
 
     status = cuFileBufDeregister(ptr);
     if (status.err != CU_FILE_SUCCESS) {
-        std::cerr <<"Error De-Registering Buffer\n";
+        LOG(ERROR) <<"Error De-Registering Buffer";
         return NIXL_ERR_BACKEND;
     }
     return NIXL_SUCCESS;
