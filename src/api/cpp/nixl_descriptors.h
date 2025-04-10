@@ -25,6 +25,8 @@
 
 #include "nixl_types.h"
 
+namespace nixl {
+
 /**
  * @class nixlBasicDesc
  * @brief A basic descriptor class, single contiguous memory/storage
@@ -363,5 +365,7 @@ typedef nixlDescList<nixlBasicDesc> nixl_xfer_dlist_t;
  *        used for creating registratoin descriptor lists
  */
 typedef nixlDescList<nixlBlobDesc> nixl_reg_dlist_t;
+
+}  // namespace nixl
 
 #endif

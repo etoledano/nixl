@@ -22,6 +22,8 @@
 
 #include "nixl_types.h"
 
+namespace nixl {
+
 /**
  * @class nixlAgentConfig
  * @brief Per Agent configuration information, such as if progress thread should be used.
@@ -68,5 +70,7 @@ public:
 
     friend class nixlAgent;
 };
+
+}  // namespace nixl
 
 #endif

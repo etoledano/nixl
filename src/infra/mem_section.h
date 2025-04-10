@@ -28,6 +28,8 @@
 #include "nixl.h"
 #include "nixl_descriptors.h"
 
+namespace nixl {
+
 typedef std::pair<nixl_mem_t, nixlBackendEngine*> section_key_t;
 typedef std::set<nixlBackendEngine*> backend_set_t;
 typedef std::unordered_map<nixl_backend_t, nixlBackendEngine*> backend_map_t;
@@ -82,5 +84,7 @@ public:
     nixl_status_t loadLocalData(const nixl_meta_dlist_t& mem_elms, nixlBackendEngine* backend);
     ~nixlRemoteSection();
 };
+
+}  // namespace nixl
 
 #endif

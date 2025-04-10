@@ -24,6 +24,8 @@
 #include "nixl_descriptors.h"
 #include "nixl_types.h"
 
+namespace nixl {
+
 // Might be removed to be decided by backend, or changed to high
 // level direction or so.
 typedef std::vector<std::pair<std::string, std::string>> notif_list_t;
@@ -112,5 +114,7 @@ public:
 };
 
 typedef nixlDescList<nixlMetaDesc> nixl_meta_dlist_t;
+
+}  // namespace nixl
 
 #endif

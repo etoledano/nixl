@@ -32,6 +32,8 @@
 #include "common/nixl_time.h"
 #include "ucx/ucx_utils.h"
 
+namespace nixl {
+
 typedef enum { CONN_CHECK, NOTIF_STR, DISCONNECT } ucx_cb_op_t;
 
 struct nixl_ucx_am_hdr {
@@ -228,5 +230,7 @@ public:
     nixl_status_t checkConn(const std::string& remote_agent);
     nixl_status_t endConn(const std::string& remote_agent);
 };
+
+}  // namespace nixl
 
 #endif

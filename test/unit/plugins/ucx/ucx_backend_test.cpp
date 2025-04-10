@@ -21,13 +21,17 @@
 #include <sstream>
 #include <string>
 
-using namespace std;
-
 #ifdef HAVE_CUDA
 
 #include <cuda.h>
 #include <cuda_runtime.h>
 
+#endif
+
+namespace nixl {
+namespace tests {
+
+#ifdef HAVE_CUDA
 int gpu_id = 0;
 
 static void
@@ -40,6 +44,7 @@ checkCudaError(cudaError_t result, const char* message)
 }
 #endif
 
+using namespace std;
 
 nixlBackendEngine*
 createEngine(std::string name, bool p_thread)
@@ -597,7 +602,7 @@ test_inter_agent_transfer(
 }
 
 int
-main()
+ucx_backend_test()
 {
     bool thread_on[2] = {false, true};
     nixlBackendEngine* ucx[2][2] = {0};
@@ -658,4 +663,13 @@ main()
             releaseEngine(ucx[i][j]);
         }
     }
+
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::ucx_backend_test();
 }

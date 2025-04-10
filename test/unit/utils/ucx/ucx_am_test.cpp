@@ -22,6 +22,9 @@
 
 #include "ucx/ucx_utils.h"
 
+namespace nixl {
+namespace tests {
+
 using namespace std;
 
 struct sample_header {
@@ -82,7 +85,7 @@ rndv_test(
 }
 
 int
-main()
+ucx_am_test()
 {
     vector<string> devs;
     devs.push_back("mlx5_0");
@@ -166,4 +169,13 @@ main()
     }
 
     free(big_buffer);
+	
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::ucx_am_test();
 }

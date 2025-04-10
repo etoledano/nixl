@@ -16,6 +16,8 @@
  */
 #include <pybind11/pybind11.h>
 
+namespace nixl {
+
 namespace py = pybind11;
 
 // JUST FOR TESTING
@@ -54,3 +56,5 @@ PYBIND11_MODULE(_utils, m)
     m.def("ba_buf", &ba_buf);
     m.def("verify_transfer", &verify_transfer);
 }
+
+}  // namespace nixl

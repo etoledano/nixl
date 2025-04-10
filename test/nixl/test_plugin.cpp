@@ -22,6 +22,9 @@
 #include "nixl.h"
 #include "plugin_manager.h"
 
+namespace nixl {
+namespace tests {
+
 void
 print_usage(const char* program_name)
 {
@@ -68,7 +71,7 @@ verify_plugin(std::string name, nixlPluginManager& plugin_manager)
 }
 
 int
-main(int argc, char** argv)
+test_plugin(int argc, char** argv)
 {
     char* plugindir = NULL;
     std::set<nixl_backend_t> staticPlugs;
@@ -124,4 +127,11 @@ main(int argc, char** argv)
     }
 
     return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main(int argc, char** argv) {
+	return nixl::tests::test_plugin(argc, argv);
 }

@@ -31,6 +31,8 @@
 
 #include "nixl_types.h"
 
+namespace nixl {
+
 #define RECV_BUFFER_SIZE 16384
 
 class nixlMetadataStream {
@@ -106,5 +108,7 @@ public:
     // Invalidating the information in the metadata server
     nixl_status_t removeLocalMetadata(const std::string& local_agent);
 };
+
+}  // namespace nixl
 
 #endif

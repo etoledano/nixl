@@ -17,6 +17,8 @@
 #ifndef __TRANSFER_REQUEST_H_
 #define __TRANSFER_REQUEST_H_
 
+namespace nixl {
+
 // Contains pointers to corresponding backend engine and its handler, and populated
 // and verified DescLists, and other state and metadata needed for a NIXL transfer
 class nixlXferReqH {
@@ -66,5 +68,7 @@ public:
 
     friend class nixlAgent;
 };
+
+}  // namespace nixl
 
 #endif

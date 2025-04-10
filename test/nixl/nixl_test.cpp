@@ -25,6 +25,10 @@
 
 #include "serdes/serdes.h"
 #include "stream/metadata_stream.h"
+
+namespace nixl {
+namespace tests {
+
 #define NUM_TRANSFERS 1
 #define SIZE 1024
 
@@ -65,7 +69,7 @@ sendToInitiator(const char* ip, int port, std::string data)
 }
 
 int
-main(int argc, char* argv[])
+nixl_test(int argc, char* argv[])
 {
     int initiator_port;
     nixl_status_t ret = NIXL_SUCCESS;
@@ -225,4 +229,11 @@ main(int argc, char* argv[])
     delete remote_serdes;
 
     return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main(int argc, char* argv[]) {
+	return nixl::tests::nixl_test(argc, argv);
 }

@@ -23,6 +23,8 @@
 #include "nixl_descriptors.h"
 #include "serdes/serdes.h"
 
+namespace nixl {
+
 /*** Class nixlMemSection implementation ***/
 
 // It's pure virtual, but base also class needs a destructor due to its members.
@@ -316,3 +318,5 @@ nixlRemoteSection::~nixlRemoteSection()
     }
     // nixlMemSection destructor will clean up the rest
 }
+
+}  // namespace nixl

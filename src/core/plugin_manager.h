@@ -25,6 +25,8 @@
 
 #include "backend/backend_plugin.h"
 
+namespace nixl {
+
 // Forward declarations
 class nixlBackendEngine;
 struct nixlBackendInitParams;
@@ -105,5 +107,7 @@ public:
     void registerStaticPlugin(const char* name, nixlStaticPluginCreatorFunc creator);
     static std::vector<nixlStaticPluginInfo>& getStaticPlugins();
 };
+
+};  // namespace nixl
 
 #endif  // __PLUGIN_MANAGER_H

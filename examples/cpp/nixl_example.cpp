@@ -25,6 +25,9 @@
 std::string agent1("Agent001");
 std::string agent2("Agent002");
 
+namespace nixl {
+namespace examples {
+
 void
 check_buf(void* buf, size_t len)
 {
@@ -69,7 +72,7 @@ printParams(const nixl_b_params_t& params, const nixl_mem_list_t& mems)
 }
 
 int
-main()
+nixl_example()
 {
     nixl_status_t ret1, ret2;
     std::string ret_s1, ret_s2;
@@ -246,4 +249,12 @@ main()
     free(addr2);
 
     std::cout << "Test done\n";
+	return 0;
+}
+
+} // namespace examples
+} // namespace nixl
+
+int main() {
+	return nixl::examples::nixl_example();
 }

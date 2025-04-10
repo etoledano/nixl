@@ -22,6 +22,9 @@
 #include "nixl.h"
 #include "ucx_backend.h"
 
+namespace nixl {
+namespace tests {
+
 std::string agent1("Agent001");
 std::string agent2("Agent002");
 
@@ -357,7 +360,7 @@ printParams(const nixl_b_params_t& params, const nixl_mem_list_t& mems)
 }
 
 int
-main()
+agent_example()
 {
     nixl_status_t ret1, ret2;
     std::string ret_s1, ret_s2;
@@ -583,4 +586,12 @@ main()
     free(addr3);
 
     std::cout << "Test done\n";
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::agent_example();
 }

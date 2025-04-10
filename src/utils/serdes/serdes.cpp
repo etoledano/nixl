@@ -16,6 +16,8 @@
  */
 #include "serdes.h"
 
+namespace nixl {
+
 nixlSerDes::nixlSerDes()
 {
     workingStr = "nixlSerDes|";
@@ -148,3 +150,5 @@ nixlSerDes::importStr(const std::string& sdbuf)
 
     return NIXL_SUCCESS;
 }
+
+}  // namespace nixl

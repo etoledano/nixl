@@ -23,6 +23,8 @@
 
 #include "common/str_tools.h"
 
+namespace nixl {
+
 #define GDS_BATCH_LIMIT 128
 
 nixlGdsIOBatch::nixlGdsIOBatch(unsigned int size)
@@ -363,3 +365,5 @@ nixlGdsEngine::~nixlGdsEngine()
     cuFileDriverClose();
     delete gds_utils;
 }
+
+}  // namespace nixl

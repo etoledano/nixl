@@ -17,6 +17,7 @@
 #ifndef _NIXL_LIST_ELEM_H
 #define _NIXL_LIST_ELEM_H
 
+namespace nixl {
 
 template <typename T>
 class nixlLinkElem {
@@ -50,5 +51,7 @@ public:
 
     T* next() { return _next; }
 };
+
+}  // namespace nixl
 
 #endif

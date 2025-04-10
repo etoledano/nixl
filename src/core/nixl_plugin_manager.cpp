@@ -29,6 +29,8 @@
 #include "nixl.h"
 #include "plugin_manager.h"
 
+namespace nixl {
+
 // pluginHandle implementation
 nixlPluginHandle::nixlPluginHandle(void* handle, nixlBackendPlugin* plugin) : handle_(handle), plugin_(plugin) {}
 
@@ -408,3 +410,5 @@ nixlPluginManager::registerBuiltinPlugins()
 #endif
 #endif
 }
+
+}  // namespace nixl

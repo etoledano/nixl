@@ -24,6 +24,8 @@
 #include "nixl.h"
 #include "serdes/serdes.h"
 
+namespace nixl {
+
 namespace py = pybind11;
 
 typedef std::map<std::string, std::vector<py::bytes>> nixl_py_notifs_t;
@@ -522,3 +524,5 @@ PYBIND11_MODULE(_bindings, m)
                  })
             .def("invalidateRemoteMD", &nixlAgent::invalidateRemoteMD);
 }
+
+}  // namespace nixl

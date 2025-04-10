@@ -25,6 +25,8 @@
 #include "nixl_params.h"
 #include "nixl_types.h"
 
+namespace nixl {
+
 /**
  * @class nixlAgent
  * @brief nixlAgent forms the main transfer object class
@@ -304,5 +306,7 @@ public:
      */
     nixl_status_t invalidateRemoteMD(const std::string& remote_agent);
 };
+
+}  // namespace nixl
 
 #endif

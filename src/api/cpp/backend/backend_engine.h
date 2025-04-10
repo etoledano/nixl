@@ -23,6 +23,8 @@
 #include "backend_aux.h"
 #include "nixl_types.h"
 
+namespace nixl {
+
 // Base backend engine class for different backend implementations
 class nixlBackendEngine {
 private:
@@ -164,4 +166,7 @@ public:
     // Force backend engine worker to progress.
     virtual int progress() { return 0; }
 };
+
+}  // namespace nixl
+
 #endif

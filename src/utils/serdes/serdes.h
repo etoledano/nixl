@@ -23,6 +23,8 @@
 
 #include "nixl_types.h"
 
+namespace nixl {
+
 class nixlSerDes {
 private:
     typedef enum { SERIALIZE, DESERIALIZE } ser_mode_t;
@@ -50,5 +52,7 @@ public:
     static std::string _bytesToString(const void* buf, ssize_t size);
     static void _stringToBytes(void* fill_buf, const std::string& s, ssize_t size);
 };
+
+}  // namespace nixl
 
 #endif

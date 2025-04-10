@@ -24,6 +24,8 @@
 #include "nixl.h"
 #include "serdes/serdes.h"
 
+namespace nixl {
+namespace tests {
 
 void
 testPerf()
@@ -71,7 +73,7 @@ testPerf()
 }
 
 int
-main()
+desc_example()
 {
     // nixlBasicDesc functionality
     nixlBasicDesc buff1;
@@ -332,4 +334,11 @@ main()
     delete ser_des2;
 
     return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::desc_example();
 }

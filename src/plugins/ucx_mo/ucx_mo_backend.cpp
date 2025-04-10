@@ -25,6 +25,8 @@
 #include <serdes/serdes.h>
 #include <ucx_mo_backend.h>
 
+namespace nixl {
+
 using namespace std;
 
 /****************************************
@@ -654,3 +656,5 @@ nixlUcxMoEngine::genNotif(const string& remote_agent, const string& msg)
 {
     return engines[0]->genNotif(getEngName(remote_agent, 0), msg);
 }
+
+}  // namespace nixl

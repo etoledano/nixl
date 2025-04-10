@@ -25,6 +25,9 @@
 
 #include "common/str_tools.h"
 
+namespace nixl {
+namespace tests {
+
 std::string
 generate_random_string(size_t length)
 {
@@ -137,7 +140,7 @@ test_comparison_perf(const int n_entries, const size_t str_len)
 }
 
 int
-main()
+map_perf()
 {
     strEqual tester;
     assert(tester.operator()("abcdefgh", "abcdefgh") == true);
@@ -158,4 +161,13 @@ main()
     test_comparison_perf(1000000, 32);
     test_comparison_perf(1000000, 64);
     test_comparison_perf(1000000, 128);
+
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::map_perf();
 }

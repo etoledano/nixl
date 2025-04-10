@@ -18,6 +18,8 @@
 #include "backend/backend_plugin.h"
 #include "gds_backend.h"
 
+namespace nixl {
+
 // Plugin version information
 static const char* PLUGIN_NAME = "GDS";
 static const char* PLUGIN_VERSION = "0.1.0";
@@ -96,3 +98,4 @@ nixl_plugin_fini()
 }
 
 #endif
+}  // namespace nixl

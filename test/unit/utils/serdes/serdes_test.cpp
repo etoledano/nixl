@@ -19,8 +19,11 @@
 #include <cassert>
 #include <iostream>
 
+namespace nixl {
+namespace tests {
+
 int
-main()
+serdes_test()
 {
     int i = 0xff;
     std::string s = "testString";
@@ -64,4 +67,11 @@ main()
     free(ptr);
 
     return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::serdes_test();
 }

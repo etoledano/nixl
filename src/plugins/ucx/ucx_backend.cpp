@@ -17,7 +17,6 @@
 #include "ucx_backend.h"
 
 #include "serdes/serdes.h"
-
 #ifdef HAVE_CUDA
 
 #include <cuda_runtime.h>
@@ -25,6 +24,7 @@
 
 #endif
 
+namespace nixl {
 
 /****************************************
  * CUDA related code
@@ -1026,3 +1026,5 @@ nixlUcxEngine::genNotif(const std::string& remote_agent, const std::string& msg)
     }
     return NIXL_SUCCESS;
 }
+
+}  // namespace nixl

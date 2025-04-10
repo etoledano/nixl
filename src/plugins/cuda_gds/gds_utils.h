@@ -22,6 +22,8 @@
 #include <nixl.h>
 #include <unistd.h>
 
+namespace nixl {
+
 class gdsFileHandle {
 public:
     int fd;
@@ -48,5 +50,7 @@ public:
     nixl_status_t openGdsDriver();
     void closeGdsDriver();
 };
+
+}  // namespace nixl
 
 #endif

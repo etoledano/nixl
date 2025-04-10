@@ -18,6 +18,8 @@
 #define __STR_TOOLS_H
 #include <regex>
 
+namespace nixl {
+
 inline std::vector<std::string>
 str_split(const std::string& str, const std::string& delims)
 {
@@ -50,4 +52,7 @@ public:
         return true;
     }
 };
+
+}  // namespace nixl
+
 #endif

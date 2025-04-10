@@ -20,6 +20,9 @@
 
 #include "stream/metadata_stream.h"
 
+namespace nixl {
+namespace tests {
+
 void
 run_server()
 {
@@ -43,7 +46,7 @@ run_client()
 }
 
 int
-main(int argc, char* argv[])
+metadata_stream_test(int argc, char* argv[])
 {
     if (argc < 2) {
         std::cout << "Enter client/server\n";
@@ -60,4 +63,11 @@ main(int argc, char* argv[])
         run_client();
 
     return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main(int argc, char* argv[]) {
+	return nixl::tests::metadata_stream_test(argc, argv);
 }

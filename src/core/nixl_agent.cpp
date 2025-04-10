@@ -24,6 +24,8 @@
 #include "serdes/serdes.h"
 #include "transfer_request.h"
 
+namespace nixl {
+
 /*** nixlEnumStrings namespace implementation in API ***/
 std::string
 nixlEnumStrings::memTypeStr(const nixl_mem_t& mem)
@@ -1010,3 +1012,5 @@ nixlAgent::invalidateRemoteMD(const std::string& remote_agent)
 
     return ret;
 }
+
+}  // namespace nixl

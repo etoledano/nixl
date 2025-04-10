@@ -25,6 +25,8 @@
 #include "nixl.h"
 #include "serdes/serdes.h"
 
+namespace nixl {
+
 /*** Class nixlBasicDesc implementation ***/
 
 // No Virtual function in nixlBasicDesc class or its children, as we want
@@ -577,3 +579,5 @@ template class nixlDescList<nixlBlobDesc>;
 template bool operator==<nixlBasicDesc>(const nixlDescList<nixlBasicDesc>& lhs, const nixlDescList<nixlBasicDesc>& rhs);
 template bool operator==<nixlMetaDesc>(const nixlDescList<nixlMetaDesc>& lhs, const nixlDescList<nixlMetaDesc>& rhs);
 template bool operator==<nixlBlobDesc>(const nixlDescList<nixlBlobDesc>& lhs, const nixlDescList<nixlBlobDesc>& rhs);
+
+}  // namespace nixl

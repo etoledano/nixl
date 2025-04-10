@@ -26,9 +26,14 @@
 // #define USE_VRAM
 
 #ifdef USE_VRAM
-
 #include <cuda_runtime.h>
 #include <cufile.h>
+#endif
+
+namespace nixl {
+namespace tests {
+
+#ifdef USE_VRAM
 
 int gpu_id = 0;
 
@@ -83,7 +88,7 @@ completeRequest(nixlUcxWorker w[2], std::string op, bool is_flush, nixl_status_t
 }
 
 int
-main()
+ucx_worker_test()
 {
     vector<string> devs;
     // TODO: pass dev name for testing
@@ -213,4 +218,13 @@ main()
     free(buffer[1]);
 #endif
     free(chk_buffer);
+
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::ucx_worker_test();
 }

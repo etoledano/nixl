@@ -20,6 +20,8 @@
 #include "common/str_tools.h"
 #include "mem_section.h"
 
+namespace nixl {
+
 typedef std::vector<nixlBackendEngine*> backend_list_t;
 
 class nixlAgentData {
@@ -71,5 +73,7 @@ public:
     friend class nixlAgentData;
     friend class nixlAgent;
 };
+
+}  // namespace nixl
 
 #endif

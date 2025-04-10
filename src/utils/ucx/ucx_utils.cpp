@@ -21,6 +21,8 @@
 #include <string>
 #include <vector>
 
+namespace nixl {
+
 using namespace std;
 
 
@@ -526,3 +528,5 @@ nixlUcxWorker::reqCancel(nixlUcxReq req)
 {
     ucp_request_cancel(worker, (void*)req);
 }
+
+}  // namespace nixl

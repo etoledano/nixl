@@ -29,6 +29,8 @@
 #include "backend/backend_engine.h"
 #include "gds_utils.h"
 
+namespace nixl {
+
 class nixlGdsMetadata : public nixlBackendMD {
 public:
     gdsFileHandle handle;
@@ -127,4 +129,7 @@ public:
     nixl_status_t checkXfer(nixlBackendReqH* handle);
     nixl_status_t releaseReqH(nixlBackendReqH* handle);
 };
+
+}  // namespace nixl
+
 #endif

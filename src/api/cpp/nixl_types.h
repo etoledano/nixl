@@ -20,6 +20,7 @@
 #include <unordered_map>
 #include <vector>
 
+namespace nixl {
 
 /*** Forward declarations ***/
 class nixlSerDes;
@@ -146,5 +147,7 @@ typedef nixlAgentOptionalArgs nixl_opt_args_t;
  *        prepared for the local agent as an initiator in prepXferDlist method.
  */
 #define NIXL_INIT_AGENT ""
+
+}  // namespace nixl
 
 #endif

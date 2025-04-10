@@ -20,6 +20,8 @@
 
 #include "backend/backend_engine.h"
 
+namespace nixl {
+
 // Define the plugin API version
 #define NIXL_PLUGIN_API_VERSION 1
 
@@ -61,5 +63,7 @@ NIXL_PLUGIN_EXPORT nixlBackendPlugin* nixl_plugin_init();
 // Cleanup the plugin
 NIXL_PLUGIN_EXPORT void nixl_plugin_fini();
 }
+
+}  // namespace nixl
 
 #endif  // __BACKEND_PLUGIN_H

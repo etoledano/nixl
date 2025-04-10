@@ -32,6 +32,8 @@
 #include <common/nixl_time.h>
 #include <ucx/ucx_utils.h>
 
+namespace nixl {
+
 class nixlUcxMoConnection : public nixlBackendConnMD {
 private:
     std::string remoteAgent;
@@ -203,5 +205,7 @@ public:
     nixl_status_t checkConn(const std::string& remote_agent);
     nixl_status_t endConn(const std::string& remote_agent);
 };
+
+}  // namespace nixl
 
 #endif

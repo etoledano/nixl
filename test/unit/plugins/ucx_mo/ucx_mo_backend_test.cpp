@@ -21,12 +21,17 @@
 #include <sstream>
 #include <string>
 
+#ifdef HAVE_CUDA
+#include <cuda.h>
+#include <cuda_runtime.h>
+#endif
+
+namespace nixl {
+namespace tests {
+
 using namespace std;
 
 #ifdef HAVE_CUDA
-
-#include <cuda.h>
-#include <cuda_runtime.h>
 
 int gpu_id = 0;
 
@@ -39,7 +44,6 @@ checkCudaError(cudaError_t result, const char* message)
     }
 }
 #endif
-
 
 static string
 op2string(nixl_xfer_op_t op, bool hasNotif)
@@ -558,7 +562,7 @@ test_agent_transfer(
 }
 
 int
-main()
+ucx_mo_backend_test()
 {
     bool thread_on[] = {false, true};
 #define THREAD_ON_SIZE (sizeof(thread_on) / sizeof(thread_on[0]))
@@ -626,4 +630,13 @@ main()
             releaseEngine(ucx[i][j]);
         }
     }
+
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::ucx_mo_backend_test();
 }

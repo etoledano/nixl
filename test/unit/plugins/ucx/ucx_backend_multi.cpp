@@ -20,6 +20,9 @@
 
 #include "ucx_backend.h"
 
+namespace nixl {
+namespace tests {
+
 // Temporarily while fixing CI/CD pipeline
 #define USE_PTHREAD false
 
@@ -97,7 +100,7 @@ test_thread(int id)
 }
 
 int
-main()
+ucx_backend_multi_test()
 {
     std::cout << "Multithread test start \n";
     std::thread th1(test_thread, 0);
@@ -105,4 +108,13 @@ main()
 
     th1.join();
     th2.join();
+
+	return 0;
+}
+
+} // namespace tests
+} // namespace nixl
+
+int main() {
+	return nixl::tests::ucx_backend_multi_test();
 }

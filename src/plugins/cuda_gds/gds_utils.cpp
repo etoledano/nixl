@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+namespace nixl {
+
 nixl_status_t
 gdsUtil::registerFileHandle(int fd, size_t size, std::string metaInfo, gdsFileHandle& gds_handle)
 {
@@ -93,3 +95,5 @@ gdsUtil::deregisterBufHandle(void* ptr)
     }
     return NIXL_SUCCESS;
 }
+
+}  // namespace nixl

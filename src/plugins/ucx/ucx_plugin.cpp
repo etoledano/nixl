@@ -18,6 +18,8 @@
 #include "backend/backend_plugin.h"
 #include "ucx_backend.h"
 
+namespace nixl {
+
 // Plugin version information
 static const char* PLUGIN_NAME = "UCX";
 static const char* PLUGIN_VERSION = "0.1.0";
@@ -96,3 +98,4 @@ nixl_plugin_fini()
     // Cleanup any resources if needed
 }
 #endif
+}  // namespace nixl

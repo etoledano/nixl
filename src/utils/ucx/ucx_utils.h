@@ -23,6 +23,8 @@ extern "C" {
 
 #include "nixl.h"
 
+namespace nixl {
+
 typedef enum { NIXL_UCX_MT_SINGLE, NIXL_UCX_MT_CTX, NIXL_UCX_MT_WORKER, NIXL_UCX_MT_MAX } nixl_ucx_mt_t;
 class nixlUcxEp {
 private:
@@ -114,5 +116,7 @@ public:
     void reqRelease(nixlUcxReq req);
     void reqCancel(nixlUcxReq req);
 };
+
+}  // namespace nixl
 
 #endif

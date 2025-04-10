@@ -34,6 +34,8 @@
 #define NUM_TRANSFERS 250
 #define SIZE 10485760
 
+namespace nixl {
+namespace tests {
 
 std::string
 generate_timestamped_filename(const std::string& base_name)
@@ -150,3 +152,6 @@ main(int argc, char* argv[])
 
     return 0;
 }
+
+} // namespace tests
+} // namespace nixl

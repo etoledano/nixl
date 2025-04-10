@@ -19,6 +19,7 @@
 
 #include <chrono>
 
+namespace nixl {
 namespace nixlTime {
 
 using namespace std::chrono;
@@ -53,5 +54,6 @@ getSec()
 }
 
 }  // namespace nixlTime
+}  // namespace nixl
 
 #endif

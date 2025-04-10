@@ -24,6 +24,8 @@
 #include <cstring>
 #include <iostream>
 
+namespace nixl {
+
 nixlMetadataStream::nixlMetadataStream(int port) : port(port), socketFd(-1)
 {
     memset(&listenerAddr, 0, sizeof(listenerAddr));
@@ -227,3 +229,5 @@ nixlMDStreamClient::recvData()
     }
     return "";
 }
+
+}  // namespace nixl
